@@ -10,16 +10,28 @@ const connectDB = require("./config/db");
 const app = express();
 
 // CORS
-// CORS
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "https://ai-cold-mail-generator-a9go.onrender.com",
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:5174"
-    ],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+app.options("*", cors());
 // Middleware
 app.use(express.json());
 
