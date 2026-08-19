@@ -132,11 +132,16 @@ Return ONLY valid JSON:
     );
 
     if (
-      !aiResponse.data?.choices ||
-      !aiResponse.data.choices[0]?.message?.content
-    ) {
-      throw new Error("Invalid response from Groq API");
-    }
+  !aiResponse.data?.choices ||
+  !aiResponse.data.choices[0]?.message?.content
+) {
+  console.error(
+    "FULL GROQ RESPONSE:",
+    JSON.stringify(aiResponse.data, null, 2)
+  );
+
+  throw new Error("Invalid response from Groq API");
+}
 
     const generatedText = aiResponse.data.choices[0].message.content.trim();
 
