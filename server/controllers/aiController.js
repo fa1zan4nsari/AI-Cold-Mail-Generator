@@ -120,7 +120,7 @@ Return ONLY valid JSON:
           },
         ],
         temperature: 0.7,
-        max_tokens: 1024,
+        max_tokens: 4096,
       },
       {
         headers: {
@@ -132,16 +132,16 @@ Return ONLY valid JSON:
     );
 
     if (
-  !aiResponse.data?.choices ||
-  !aiResponse.data.choices[0]?.message?.content
-) {
-  console.error(
-    "FULL GROQ RESPONSE:",
-    JSON.stringify(aiResponse.data, null, 2)
-  );
+      !aiResponse.data?.choices ||
+      !aiResponse.data.choices[0]?.message?.content
+    ) {
+      console.error(
+        "FULL GROQ RESPONSE:",
+        JSON.stringify(aiResponse.data, null, 2),
+      );
 
-  throw new Error("Invalid response from Groq API");
-}
+      throw new Error("Invalid response from Groq API");
+    }
 
     const generatedText = aiResponse.data.choices[0].message.content.trim();
 
